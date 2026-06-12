@@ -10,7 +10,7 @@ layout(location = 0) out vec4 color;
 
 void main()
 {
-    float cellSize = 0.008;
+    float cellSize = 0.009;
 
     vec2 cellUV =
         floor(texcoord / cellSize) * cellSize;
@@ -40,6 +40,18 @@ void main()
     float glyph =
         texture(asciiAtlas, atlasUV).r;
 
+    vec3 finalColor =
+        scene * (0.15 + glyph * 0.85);
+
+    float gray =
+        dot(finalColor, vec3(0.299, 0.587, 0.114));
+
+    finalColor =
+        mix(vec3(gray), finalColor, 1);
+
+    finalColor =
+        pow(finalColor, vec3(0.8));
+
     color =
-        vec4(scene * glyph, 1.0);
+        vec4(finalColor, 1.0);
 }
