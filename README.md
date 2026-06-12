@@ -26,7 +26,7 @@ This was mostly an experiment to learn GLSL and shader programming. It started a
 
 ## Screenshots 
 ![ASCII Shader](sa.png)
-![ASCII Shader](pasted file.png)
+![ASCII Shader](night.png)
 
 ## Use of ai 
 * yes ai was used in this project but only for creating atlas bcs it saves time and formatting this readme cuz idk how to write good md
