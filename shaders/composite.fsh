@@ -1,6 +1,7 @@
 #version 330 compatibility
 
 uniform sampler2D colortex0;
+uniform sampler2D asciiAtlas;
 
 in vec2 texcoord;
 
@@ -9,40 +10,36 @@ layout(location = 0) out vec4 color;
 
 void main()
 {
-    float size = 0.003;
+    float cellSize = 0.008;
 
-    vec2 uv = floor(texcoord / size) * size;
+    vec2 cellUV =
+        floor(texcoord / cellSize) * cellSize;
 
-    vec4 c = texture(colortex0, uv);
+    vec3 scene =
+        texture(colortex0, cellUV).rgb;
 
     float brightness =
-        dot(c.rgb, vec3(0.299, 0.587, 0.114));
+        dot(scene, vec3(0.299, 0.587, 0.114));
+
+    float index =
+        floor(brightness * 90.0);
+
+    float atlasX =
+        mod(index, 16.0);
+
+    float atlasY =
+        floor(index / 16.0);
 
     vec2 local =
-        fract(texcoord / size);
+        fract(texcoord / cellSize);
 
-    float glyph = 0.0;
+    vec2 atlasUV =
+        (vec2(atlasX, atlasY) + local)
+        / vec2(16.0, 6.0);
 
-    if (brightness > 0.8)
-    {
-        if (length(local - vec2(0.5)) < 0.45)
-            glyph = 1.0;
-    }
-    else if (brightness > 0.6)
-    {
-        if (length(local - vec2(0.5)) < 0.35)
-            glyph = 1.0;
-    }
-    else if (brightness > 0.4)
-    {
-        if (length(local - vec2(0.5)) < 0.25)
-            glyph = 1.0;
-    }
-    else if (brightness > 0.2)
-    {
-        if (length(local - vec2(0.5)) < 0.15)
-            glyph = 1.0;
-    }
+    float glyph =
+        texture(asciiAtlas, atlasUV).r;
 
-    color = vec4(vec3(glyph), 1.0);
+    color =
+        vec4(vec3(glyph), 1.0);
 }
