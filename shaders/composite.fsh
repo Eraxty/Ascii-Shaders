@@ -21,11 +21,8 @@ void main()
     float brightness =
         dot(scene, vec3(0.299, 0.587, 0.114));
 
-    brightness =
-        clamp(brightness, 0.0, 1.0);
-
     float index =
-        floor((1.0 - brightness) * 90.0);
+        floor(brightness * 90.0);
 
     float atlasX =
         mod(index, 16.0);
@@ -44,7 +41,13 @@ void main()
         texture(asciiAtlas, atlasUV).r;
 
     vec3 finalColor =
-        scene * glyph;
+        scene * (0.15 + glyph * 0.85);
+
+    float gray =
+        dot(finalColor, vec3(0.299, 0.587, 0.114));
+
+    finalColor =
+        mix(vec3(gray), finalColor, 1.0);
 
     finalColor =
         pow(finalColor, vec3(0.8));
