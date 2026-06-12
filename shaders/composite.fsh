@@ -41,5 +41,5 @@ void main()
         texture(asciiAtlas, atlasUV).r;
 
     color =
-        vec4(vec3(glyph), 1.0);
+        vec4(scene * glyph, 1.0);
 }
