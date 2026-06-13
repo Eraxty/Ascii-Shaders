@@ -46,3 +46,6 @@ print(f"Generated ascii.png")
 print(f"Characters: {len(chars)}")
 print(f"Atlas: {WIDTH}x{HEIGHT}")
 print(f"Grid: {COLS}x{ROWS}")
+
+
+#this code was written by chatgpt, bcs i am lazy and wanted to generate an ascii atlas faster S
